@@ -6,9 +6,10 @@ public class ItemPedido {
     private String descricao;
     private double valor;
 
-    public ItemPedido(){}
+    public ItemPedido() {
+    }
 
-    public ItemPedido(int quantidade, String descricao, double valor){
+    public ItemPedido(int quantidade, String descricao, double valor) {
         this.quantidade = quantidade;
         this.descricao = descricao;
         this.valor = valor;

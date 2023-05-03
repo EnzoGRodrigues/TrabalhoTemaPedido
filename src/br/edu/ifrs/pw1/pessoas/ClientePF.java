@@ -2,22 +2,21 @@ package br.edu.ifrs.pw1.pessoas;
 
 import br.edu.ifrs.pw1.pedidos.Pedido;
 
+import java.util.Objects;
 import java.util.TreeSet;
 
-public final class ClientePF extends Cliente{
+public final class ClientePF extends Cliente implements Comparable<ClientePF>{
 
     private String cpf;
     private String telefone;
-    Cliente cliente;
     TreeSet<Pedido> pedidos;
 
     public ClientePF(){}
 
-    public ClientePF(String nome, String endereco, String cpf, String telefone, Cliente cliente, TreeSet<Pedido> pedidos) {
+    public ClientePF(String nome, String endereco, String cpf, String telefone, TreeSet<Pedido> pedidos) {
         super(nome, endereco);
         this.cpf = cpf;
         this.telefone = telefone;
-        this.cliente = cliente;
         this.pedidos = pedidos;
     }
 
@@ -37,14 +36,6 @@ public final class ClientePF extends Cliente{
         this.telefone = telefone;
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
     public TreeSet<Pedido> getPedidos() {
         return pedidos;
     }
@@ -58,8 +49,25 @@ public final class ClientePF extends Cliente{
         return "ClientePF{" +
                 "cpf='" + cpf + '\'' +
                 ", telefone='" + telefone + '\'' +
-                ", cliente=" + cliente +
                 ", pedidos=" + pedidos +
                 '}';
+    }
+
+    @Override
+    public int compareTo(ClientePF o) {
+        return super.getNome().compareTo(o.getNome());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ClientePF clientePF = (ClientePF) o;
+        return Objects.equals(getNome(), clientePF.getNome());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getNome());
     }
 }

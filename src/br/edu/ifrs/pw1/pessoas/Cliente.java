@@ -37,4 +37,6 @@ public abstract class Cliente {
                 ", endereco='" + endereco + '\'' +
                 '}';
     }
+
+    public abstract int compareTo(ClientePF o);
 }

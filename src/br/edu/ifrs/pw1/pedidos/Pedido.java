@@ -1,26 +1,30 @@
 package br.edu.ifrs.pw1.pedidos;
 
+import br.edu.ifrs.pw1.util.Situacao;
+
+import java.util.LinkedList;
 import java.util.Objects;
 import java.util.TreeSet;
 
-public class Pedido {
+public class Pedido implements Comparable<Pedido>{
 
     public static int contador = 0;
-    public double numeroTotalPedidos;
+    public static int numeroTotalPedidos;
     private double valor;
     private String data;
     private int numero;
+    Situacao situacao;
 
-    TreeSet<ItemPedido> itensPedidos;
+    LinkedList<ItemPedido> itensPedidos;
 
     public Pedido(){}
 
-    public Pedido(double numeroTotalPedidos, double valor, String data, int numero, TreeSet<ItemPedido> itensPedidos) {
-        contador++;
-        this.numeroTotalPedidos = numeroTotalPedidos;
+    public Pedido(double valor, String data, int numero, Situacao situacao, LinkedList<ItemPedido> itensPedidos) {
+        contador ++;
         this.valor = valor;
         this.data = data;
         this.numero = numero;
+        this.situacao = situacao;
         this.itensPedidos = itensPedidos;
     }
 
@@ -32,12 +36,12 @@ public class Pedido {
         Pedido.contador = contador;
     }
 
-    public double getNumeroTotalPedidos() {
-        return numeroTotalPedidos+= contador;
+    public static int getNumeroTotalPedidos() {
+        return numeroTotalPedidos;
     }
 
-    public void setNumeroTotalPedidos(double numeroTotalPedidos) {
-        this.numeroTotalPedidos = numeroTotalPedidos;
+    public void setNumeroTotalPedidos(int numeroTotalPedidos) {
+        this.numeroTotalPedidos += contador;
     }
 
     public double getValor() {
@@ -64,12 +68,31 @@ public class Pedido {
         this.numero = numero;
     }
 
-    public TreeSet<ItemPedido> getItensPedidos() {
+    public Situacao getSituacao() {
+        return situacao;
+    }
+
+    public void setSituacao(Situacao situacao) {
+        this.situacao = situacao;
+    }
+
+    public LinkedList<ItemPedido> getItensPedidos() {
         return itensPedidos;
     }
 
-    public void setItensPedidos(TreeSet<ItemPedido> itensPedidos) {
+    public void setItensPedidos(LinkedList<ItemPedido> itensPedidos) {
         this.itensPedidos = itensPedidos;
+    }
+
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "valor=" + valor +
+                ", data='" + data + '\'' +
+                ", numero=" + numero +
+                ", situacao=" + situacao +
+                ", itensPedidos=" + itensPedidos +
+                '}';
     }
 
     @Override
@@ -77,22 +100,18 @@ public class Pedido {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pedido pedido = (Pedido) o;
-        return Double.compare(pedido.numeroTotalPedidos, numeroTotalPedidos) == 0 && Double.compare(pedido.valor, valor) == 0 && numero == pedido.numero && Objects.equals(data, pedido.data) && Objects.equals(itensPedidos, pedido.itensPedidos);
+        return valor == pedido.valor;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(numeroTotalPedidos, valor, data, numero, itensPedidos);
+        return Objects.hash(valor);
     }
 
     @Override
-    public String toString() {
-        return "Pedido{" +
-                "numeroTotalPedidos=" + numeroTotalPedidos +
-                ", valor=" + valor +
-                ", data='" + data + '\'' +
-                ", numero=" + numero +
-                ", itensPedidos=" + itensPedidos +
-                '}';
+    public int compareTo(Pedido o) {
+        if(o.getValor() == this.getValor())return 0;
+        if (o.getValor() < this.getValor())return -1;
+        return 1;
     }
 }
