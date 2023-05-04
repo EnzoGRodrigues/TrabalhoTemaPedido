@@ -2,10 +2,10 @@ package br.edu.ifrs.pw1.util;
 
 public enum OpcoesMenu {
     CADASTRAR_CLIENTE(1,"Cadastrar Cliente"),
-    PESQUISA_CLIENTE_NOME(2,"Pesquisa Cliente Nome ou Razao Social"),
-    PESQUISA_CLIENTE_NUMERO(3,"Pesquisa Cliente Numero Pedido"),
+    PESQUISA_CLIENTE_NOME(2,"Pesquisa Cliente pelo Nome ou Razao Social"),
+    PESQUISA_CLIENTE_NUMERO(3,"Pesquisa Cliente pelo Numero Pedido"),
     LISTAR_CLIENTES(4,"Listar Todos os Clientes"),
-    LISTAR_CLIENTES_ORD(5,"Listar todos os clientes em ordem"),
+    LISTAR_CLIENTES_ORD(5,"Listar Todos os Clientes em Ordem"),
     SAIR(6,"Sair");
 
 

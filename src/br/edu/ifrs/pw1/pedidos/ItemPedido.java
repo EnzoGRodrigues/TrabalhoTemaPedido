@@ -41,10 +41,11 @@ public class ItemPedido {
 
     @Override
     public String toString() {
-        return "ItemPedido{" +
-                "quantidade=" + quantidade +
-                ", descricao='" + descricao + '\'' +
-                ", valor=" + valor +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("Descrição: ").append(descricao).append("\n");
+        sb.append("Quantidade: ").append(quantidade).append("\n");
+        sb.append("Valor Unitário: ").append(valor).append("\n");
+        sb.append("Valor Total: ").append(quantidade * valor).append("\n");
+        return sb.toString();
     }
 }

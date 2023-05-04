@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ValidadorData {
+public class ValidadorData implements Validador<ValidadorData>{
 
     public static boolean validarData(String data){
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -20,5 +20,10 @@ public class ValidadorData {
         }catch (ParseException e){
             return false;
         }
+    }
+
+    @Override
+    public boolean validar(ValidadorData obj) {
+        return false;
     }
 }

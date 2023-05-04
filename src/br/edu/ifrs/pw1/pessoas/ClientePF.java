@@ -46,11 +46,14 @@ public final class ClientePF extends Cliente implements Comparable<ClientePF>{
 
     @Override
     public String toString() {
-        return "ClientePF{" +
-                "cpf='" + cpf + '\'' +
-                ", telefone='" + telefone + '\'' +
-                ", pedidos=" + pedidos +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("CPF: ").append(cpf).append("\n");
+        sb.append("Telefone: ").append(telefone).append("\n");
+        sb.append("Pedidos: \n");
+        for (Pedido pedido : pedidos) {
+            sb.append("\t").append(pedido.toString()).append("\n");
+        }
+        return sb.toString();
     }
 
     @Override

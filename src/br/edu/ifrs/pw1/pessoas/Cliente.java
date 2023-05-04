@@ -32,10 +32,10 @@ public abstract class Cliente {
 
     @Override
     public String toString() {
-        return "Cliente{" +
-                "nome='" + nome + '\'' +
-                ", endereco='" + endereco + '\'' +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("Nome: ").append(nome).append("\n");
+        sb.append("Endereço: ").append(endereco).append("\n");
+        return sb.toString();
     }
 
     public abstract int compareTo(ClientePF o);

@@ -6,7 +6,6 @@ import br.edu.ifrs.pw1.pessoas.Cliente;
 import br.edu.ifrs.pw1.pessoas.ClientePF;
 
 import javax.swing.*;
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Menu {
@@ -68,7 +67,7 @@ public class Menu {
         try { //esse try catch faz o tratamento do parseInt
             //perguntando ao usuario se ele quer registrar um pedido
             opcao = Integer.parseInt(JOptionPane.showInputDialog(null,
-                    "Quer registrar um pedido\n" +
+                    "Quer registrar um pedido?\n" +
                             "Se sim, digite 1\n" +
                             "Se nao, digite 2\n"));
         } catch (NumberFormatException e) {
@@ -76,30 +75,41 @@ public class Menu {
         }
         if (opcao == SIM) {
             LinkedList<ItemPedido> itemPedidos = new LinkedList<>();
-            double totalValorPedido = 0;
-            while (opcao == SIM) {
+            boolean dataValida = false;
+            String dataPedido = "";
+            while (!dataValida){
+                dataPedido = JOptionPane.showInputDialog(null,"Digite a data do pedido (DD/MM/YYYY): ");
+                dataValida = ValidadorData.validarData(dataPedido);
 
-                ItemPedido itens = new ItemPedido(Integer.parseInt(JOptionPane.showInputDialog(null, "Quantidade do item: ")),
-                        JOptionPane.showInputDialog(null, "Descricao do item: "),
-                        Double.parseDouble(JOptionPane.showInputDialog(null, "Valor do item")));
-                totalValorPedido += itens.getValor() * itens.getQuantidade();
-                itemPedidos.add(itens);
-                opcao = Integer.parseInt(JOptionPane.showInputDialog(null, "Deseja registrar mais itens?\nDigite 1 para SIM: \nDigite 2 para NAO: "));
+                if(!dataValida){
+                    JOptionPane.showMessageDialog(null,"Data invalida!");
+                }
             }
-            String date;
-            Pedido pedido = new Pedido(totalValorPedido,
-                    (JOptionPane.showInputDialog(null, "Digite a data: ")),
-                    Pedido.getNumeroTotalPedidos(),
-                    Situacao.ABERTO,
-                    itemPedidos
-            );
-            pedidos.add(pedido);
+            while (opcao ==SIM) {
+                double totalValorPedido = 0;
+                while (opcao == SIM) {
+                    ItemPedido itens = new ItemPedido(Integer.parseInt(JOptionPane.showInputDialog(null, "Quantidade do item: ")),
+                            JOptionPane.showInputDialog(null, "Descricao do item: "),
+                            Double.parseDouble(JOptionPane.showInputDialog(null, "Valor do item")));
+                    totalValorPedido += itens.getValor() * itens.getQuantidade();
+                    itemPedidos.add(itens);
+                    opcao = Integer.parseInt(JOptionPane.showInputDialog(null, "Deseja registrar mais itens?\nDigite 1 para SIM: \nDigite 2 para NAO: "));
+                }
+
+                Pedido pedido = new Pedido(totalValorPedido,
+                        dataPedido,
+                        Pedido.getNumeroTotalPedidos(),
+                        Situacao.ABERTO,
+                        itemPedidos
+                );
+                pedidos.add(pedido);
 
                 opcao = Integer.parseInt(JOptionPane.showInputDialog(null,
                         "Quer registrar mais pedidos?\n" +
                                 "Se sim, digite 1\n" +
                                 "Se nao, digite 2\n" + "O valor o pedido e: " + pedido.getValor()));
 
+            }
         }
 
             if (opcao == SIM) {
@@ -111,63 +121,54 @@ public class Menu {
             }
         }
 
-
- /*int opcao = Integer.parseInt(JOptionPane.showInputDialog(null,"Quer registrar um pedido?" + "\n" + "Digite 1 para SIM" +"\n" + "Digite 2 para NAO"));
-    while(opcao == 1){
-        if(opcao == 1){
-            ArrayList<ItemPedido> itensPedido = new ArrayList<>();
-            double total = 0;
-            while (opcao == 1){
-
-                ItemPedido itens = new ItemPedido((Integer.parseInt(JOptionPane.showInputDialog(null, "Quantidade do item: "))),
-                        JOptionPane.showInputDialog(null,"Descricao do item: "),
-                        (Double.parseDouble(JOptionPane.showInputDialog(null, "Valor do item: ")))
-                );
-                total += itens.getValor();
-                itensPedido.add(itens);
-                opcao = Integer.parseInt(JOptionPane.showInputDialog(null, "Quer registrar mais itens?" + "\n" + "Se SIM, digite 1" + "\n" + "Se NAO, digite 2"))
-            }
-            Pedido pedido = new Pedido(total, (JOptionPane.showInputDialog(null,"Informe a data: ")),
-                    pedido.getNumeroTotalPedidos(),
-                    Situacao.ABERTO,
-                    itensPedido
-            );
-            pedidos.add(pedido);
-
-            JOptionPane.showMessageDialog(null,"Pedido Finalizado" + "\n" + "Valor total: " + pedido.getValor());
-            opcao = Integer.parseInt(JOptionPane.showInputDialog(null,"Finalizando..." + "" +
-                    "\n" + "Para fazer outro pedido, digite 1" + "\n" + "Para finalizar cadastro do cliente, digite 2"));
-        }
-    }
-    if(opcao == 1){
-        JOptionPane.showMessageDialog(null, "Cliente cadastrado!");
-    }else{
-        JOptionPane.showMessageDialog(null, "Opcao inválida.");
-    }
-    JOptionPane.showMessageDialog(null,"Cliente cadastrado!");
-*/
-
-
     public static void pesquisarClienteNome() {
-        String busca = JOptionPane.showInputDialog(null,"Digite o nome do cliente: ");
-        for(Cliente cliente : listaClientes){
-            if (busca.equals(cliente.getNome()))
-                JOptionPane.showMessageDialog(null, cliente.toString());
+        String busca = JOptionPane.showInputDialog(null, "Digite o nome do cliente: ");
+        boolean encontrado = false;
+        for (ClientePF clientepf : listaClientes) {
+            if (busca.equalsIgnoreCase(clientepf.getNome())) {
+                // Criar um ArrayList com os pedidos do cliente
+                ArrayList<Pedido> pedidos = new ArrayList<>(clientepf.getPedidos());
+                // Comparador para ordem decrescente dos valores dos pedidos
+                Comparator<Pedido> pedidoComparator = new Comparator<Pedido>() {
+                    @Override
+                    public int compare(Pedido o1, Pedido o2) {
+                        return Double.compare(o2.getValor(), o1.getValor());
+                    }
+                };
+                // Ordena os pedidos do cliente pelo valor usando o comparador
+                Collections.sort(pedidos, pedidoComparator);
+                // Exibe o cliente e seus pedidos ordenados pelo valor
+                JOptionPane.showMessageDialog(null, clientepf.toString());
+                encontrado = true;
+                break;
+            }
         }
-        JOptionPane.showMessageDialog(null,"Nome invalido");
+        if (!encontrado) {
+            JOptionPane.showMessageDialog(null, "Cliente não encontrado!");
+        }
     }
 
 
 
     public static void pesquisarClienteNumero() {
         boolean flag = false;
-        if(listaClientes!=null){
-            int busca = Integer.parseInt(JOptionPane.showInputDialog(null, "Informe o numero do pedido: "));
-            for(ClientePF cliente : listaClientes){
-                if(busca == listaClientes.size())
-                    JOptionPane.showMessageDialog(null,cliente.getNome());
+        if (listaClientes != null) {
+            int busca = Integer.parseInt(JOptionPane.showInputDialog(null, "Informe o número do pedido: "));
+            for (ClientePF cliente : listaClientes) {
+                for (Pedido pedido : cliente.getPedidos()) {
+                    if (busca == pedido.getNumero()) {
+                        JOptionPane.showMessageDialog(null, cliente.getNome());
+                        flag = true;
+                        break;
+                    }
+                }
+                if (flag) {
+                    break;
+                }
             }
-            JOptionPane.showMessageDialog(null, "Numero de pedido invalido");
+            if (!flag) {
+                JOptionPane.showMessageDialog(null, "Número de pedido inválido");
+            }
         }
     }
 

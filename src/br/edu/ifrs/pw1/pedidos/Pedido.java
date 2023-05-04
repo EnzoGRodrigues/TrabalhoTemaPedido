@@ -8,7 +8,7 @@ import java.util.TreeSet;
 
 public class Pedido implements Comparable<Pedido>{
 
-    public static int contador = 0;
+    public static int contador = 1;
     public static int numeroTotalPedidos;
     private double valor;
     private String data;
@@ -37,11 +37,11 @@ public class Pedido implements Comparable<Pedido>{
     }
 
     public static int getNumeroTotalPedidos() {
-        return numeroTotalPedidos;
+        return numeroTotalPedidos = contador;
     }
 
     public void setNumeroTotalPedidos(int numeroTotalPedidos) {
-        this.numeroTotalPedidos += contador;
+        this.numeroTotalPedidos = contador;
     }
 
     public double getValor() {
@@ -86,13 +86,16 @@ public class Pedido implements Comparable<Pedido>{
 
     @Override
     public String toString() {
-        return "Pedido{" +
-                "valor=" + valor +
-                ", data='" + data + '\'' +
-                ", numero=" + numero +
-                ", situacao=" + situacao +
-                ", itensPedidos=" + itensPedidos +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("Número do Pedido: ").append(numero).append("\n");
+        sb.append("Data: ").append(data).append("\n");
+        sb.append("Valor Total: ").append(valor).append("\n");
+        sb.append("Situação: ").append(situacao).append("\n");
+        sb.append("Itens do Pedido: \n");
+        for (ItemPedido item : itensPedidos) {
+            sb.append("\t").append(item.toString()).append("\n");
+        }
+        return sb.toString();
     }
 
     @Override
