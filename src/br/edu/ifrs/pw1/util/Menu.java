@@ -98,7 +98,6 @@ public class Menu {
 
                 Pedido pedido = new Pedido(totalValorPedido,
                         dataPedido,
-                        Pedido.getNumeroTotalPedidos(),
                         Situacao.ABERTO,
                         itemPedidos
                 );
@@ -125,7 +124,9 @@ public class Menu {
         String busca = JOptionPane.showInputDialog(null, "Digite o nome do cliente: ");
         boolean encontrado = false;
         for (ClientePF clientepf : listaClientes) {
-            if (busca.equalsIgnoreCase(clientepf.getNome())) {
+            if (busca == clientepf.getNome()) {
+                JOptionPane.showMessageDialog(null, "Cliente encontrado!");
+            /*if (busca.equalsIgnoreCase(clientepf.getNome())) {
                 // Criar um ArrayList com os pedidos do cliente
                 ArrayList<Pedido> pedidos = new ArrayList<>(clientepf.getPedidos());
                 // Comparador para ordem decrescente dos valores dos pedidos
@@ -144,7 +145,10 @@ public class Menu {
             }
         }
         if (!encontrado) {
-            JOptionPane.showMessageDialog(null, "Cliente não encontrado!");
+            JOptionPane.showMessageDialog(null, "Cliente não encontrado!");*/
+            } else {
+                JOptionPane.showMessageDialog(null, "Cliente nao encontrado");
+            }
         }
     }
 
@@ -156,7 +160,7 @@ public class Menu {
             int busca = Integer.parseInt(JOptionPane.showInputDialog(null, "Informe o número do pedido: "));
             for (ClientePF cliente : listaClientes) {
                 for (Pedido pedido : cliente.getPedidos()) {
-                    if (busca == pedido.getNumero()) {
+                    if (busca == pedido.getTotalPedidos()) {
                         JOptionPane.showMessageDialog(null, cliente.getNome());
                         flag = true;
                         break;

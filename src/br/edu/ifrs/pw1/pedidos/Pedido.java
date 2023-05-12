@@ -1,31 +1,33 @@
 package br.edu.ifrs.pw1.pedidos;
 
 import br.edu.ifrs.pw1.util.Situacao;
+import br.edu.ifrs.pw1.util.Validador;
 
+import javax.xml.validation.Validator;
 import java.util.LinkedList;
 import java.util.Objects;
-import java.util.TreeSet;
 
-public class Pedido implements Comparable<Pedido>{
+public class Pedido implements Validador, Comparable<Pedido>{
 
-    public static int contador = 1;
-    public static int numeroTotalPedidos;
+    private static int contador = 1; //variavel numero
     private double valor;
     private String data;
-    private int numero;
-    Situacao situacao;
+    private Situacao situacao;
 
-    LinkedList<ItemPedido> itensPedidos;
+    private LinkedList<ItemPedido> itensPedidos;
 
     public Pedido(){}
 
-    public Pedido(double valor, String data, int numero, Situacao situacao, LinkedList<ItemPedido> itensPedidos) {
+    public Pedido(double valor, String data, Situacao situacao, LinkedList<ItemPedido> itensPedidos) {
         contador ++;
         this.valor = valor;
         this.data = data;
-        this.numero = numero;
-        this.situacao = situacao;
+        this.situacao = situacao.ABERTO;
         this.itensPedidos = itensPedidos;
+    }
+
+    public static int getTotalPedidos(){
+        return contador;
     }
 
     public static int getContador() {
@@ -34,14 +36,6 @@ public class Pedido implements Comparable<Pedido>{
 
     public static void setContador(int contador) {
         Pedido.contador = contador;
-    }
-
-    public static int getNumeroTotalPedidos() {
-        return numeroTotalPedidos = contador;
-    }
-
-    public void setNumeroTotalPedidos(int numeroTotalPedidos) {
-        this.numeroTotalPedidos = contador;
     }
 
     public double getValor() {
@@ -58,14 +52,6 @@ public class Pedido implements Comparable<Pedido>{
 
     public void setData(String data) {
         this.data = data;
-    }
-
-    public int getNumero() {
-        return numero;
-    }
-
-    public void setNumero(int numero) {
-        this.numero = numero;
     }
 
     public Situacao getSituacao() {
@@ -87,7 +73,7 @@ public class Pedido implements Comparable<Pedido>{
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Número do Pedido: ").append(numero).append("\n");
+        sb.append("Número do Pedido: ").append(getTotalPedidos()).append("\n");
         sb.append("Data: ").append(data).append("\n");
         sb.append("Valor Total: ").append(valor).append("\n");
         sb.append("Situação: ").append(situacao).append("\n");
@@ -116,5 +102,10 @@ public class Pedido implements Comparable<Pedido>{
         if(o.getValor() == this.getValor())return 0;
         if (o.getValor() < this.getValor())return -1;
         return 1;
+    }
+
+    @Override
+    public boolean validar(Object obj) {
+        return false;
     }
 }

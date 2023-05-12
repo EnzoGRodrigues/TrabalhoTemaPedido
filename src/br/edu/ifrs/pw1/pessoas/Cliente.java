@@ -1,7 +1,5 @@
 package br.edu.ifrs.pw1.pessoas;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
 public abstract class Cliente {
 
@@ -33,8 +31,8 @@ public abstract class Cliente {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Nome: ").append(nome).append("\n");
-        sb.append("Endereço: ").append(endereco).append("\n");
+        sb.append("Nome: ").append(getNome()).append("\n");
+        sb.append("Endereço: ").append(getEndereco()).append("\n");
         return sb.toString();
     }
 
