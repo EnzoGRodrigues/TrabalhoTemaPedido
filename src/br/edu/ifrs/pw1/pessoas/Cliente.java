@@ -35,6 +35,4 @@ public abstract class Cliente {
         sb.append("Endereço: ").append(getEndereco()).append("\n");
         return sb.toString();
     }
-
-    public abstract int compareTo(ClientePF o);
 }

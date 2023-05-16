@@ -3,39 +3,42 @@ package br.edu.ifrs.pw1.pedidos;
 import br.edu.ifrs.pw1.util.Situacao;
 import br.edu.ifrs.pw1.util.Validador;
 
-import javax.xml.validation.Validator;
+
 import java.util.LinkedList;
 import java.util.Objects;
 
 public class Pedido implements Validador, Comparable<Pedido>{
 
-    private static int contador = 1; //variavel numero
+    private static int contador = 0; //variavel numero
+    private int numero;
     private double valor;
     private String data;
     private Situacao situacao;
 
     private LinkedList<ItemPedido> itensPedidos;
 
-    public Pedido(){}
+    public Pedido(){
+    }
 
     public Pedido(double valor, String data, Situacao situacao, LinkedList<ItemPedido> itensPedidos) {
-        contador ++;
         this.valor = valor;
         this.data = data;
         this.situacao = situacao.ABERTO;
         this.itensPedidos = itensPedidos;
+        this.numero = contador;
+        contador++;
     }
 
     public static int getTotalPedidos(){
         return contador;
     }
 
-    public static int getContador() {
-        return contador;
+    public int getNumero() {
+        return numero;
     }
 
-    public static void setContador(int contador) {
-        Pedido.contador = contador;
+    public void setNumero(int numero) {
+        this.numero = numero;
     }
 
     public double getValor() {
@@ -73,7 +76,7 @@ public class Pedido implements Validador, Comparable<Pedido>{
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Número do Pedido: ").append(getTotalPedidos()).append("\n");
+        sb.append("Número do Pedido: ").append(getNumero()).append("\n");
         sb.append("Data: ").append(data).append("\n");
         sb.append("Valor Total: ").append(valor).append("\n");
         sb.append("Situação: ").append(situacao).append("\n");

@@ -86,7 +86,7 @@ public class Menu {
                 }
             }
             while (opcao ==SIM) {
-                double totalValorPedido = 0;
+                double totalValorPedido = 0d;
                 while (opcao == SIM) {
                     ItemPedido itens = new ItemPedido(Integer.parseInt(JOptionPane.showInputDialog(null, "Quantidade do item: ")),
                             JOptionPane.showInputDialog(null, "Descricao do item: "),
@@ -111,43 +111,26 @@ public class Menu {
             }
         }
 
-            if (opcao == SIM) {
-                JOptionPane.showMessageDialog(null, "Pedido realizado!");
-            } else if (opcao == NAO) {
-                JOptionPane.showMessageDialog(null, "Cadastro finalizado");
-            } else {
-                JOptionPane.showMessageDialog(null, "Opcao invalida");
-            }
+        if (opcao == NAO) {
+            JOptionPane.showMessageDialog(null, "Cadastro finalizado");
+        } else {
+            JOptionPane.showMessageDialog(null, "Opcao invalida");
+        }
         }
 
     public static void pesquisarClienteNome() {
-        String busca = JOptionPane.showInputDialog(null, "Digite o nome do cliente: ");
-        boolean encontrado = false;
-        for (ClientePF clientepf : listaClientes) {
-            if (busca == clientepf.getNome()) {
-                JOptionPane.showMessageDialog(null, "Cliente encontrado!");
-            /*if (busca.equalsIgnoreCase(clientepf.getNome())) {
-                // Criar um ArrayList com os pedidos do cliente
-                ArrayList<Pedido> pedidos = new ArrayList<>(clientepf.getPedidos());
-                // Comparador para ordem decrescente dos valores dos pedidos
-                Comparator<Pedido> pedidoComparator = new Comparator<Pedido>() {
-                    @Override
-                    public int compare(Pedido o1, Pedido o2) {
-                        return Double.compare(o2.getValor(), o1.getValor());
-                    }
-                };
-                // Ordena os pedidos do cliente pelo valor usando o comparador
-                Collections.sort(pedidos, pedidoComparator);
-                // Exibe o cliente e seus pedidos ordenados pelo valor
-                JOptionPane.showMessageDialog(null, clientepf.toString());
-                encontrado = true;
-                break;
+        boolean flag = false;
+        if(listaClientes != null) {
+            String busca = JOptionPane.showInputDialog(null, "Digite o nome do cliente: ");
+            for (ClientePF clientepf : listaClientes) {
+                if (busca.equalsIgnoreCase(clientepf.getNome())) {
+                    JOptionPane.showMessageDialog(null, "Cliente encontrado!");
+                    flag = true;
+                    break;
+                }
             }
-        }
-        if (!encontrado) {
-            JOptionPane.showMessageDialog(null, "Cliente não encontrado!");*/
-            } else {
-                JOptionPane.showMessageDialog(null, "Cliente nao encontrado");
+            if (!flag) {
+                JOptionPane.showMessageDialog(null, "Cliente não encontrado!");
             }
         }
     }
@@ -160,21 +143,22 @@ public class Menu {
             int busca = Integer.parseInt(JOptionPane.showInputDialog(null, "Informe o número do pedido: "));
             for (ClientePF cliente : listaClientes) {
                 for (Pedido pedido : cliente.getPedidos()) {
-                    if (busca == pedido.getTotalPedidos()) {
+                    if (busca == pedido.getNumero()) {
                         JOptionPane.showMessageDialog(null, cliente.getNome());
                         flag = true;
                         break;
                     }
                 }
-                if (flag) {
+                if(flag){
                     break;
                 }
+            }
+
             }
             if (!flag) {
                 JOptionPane.showMessageDialog(null, "Número de pedido inválido");
             }
         }
-    }
 
     public static void listarTodosClientes() {
         StringBuilder clientes = new StringBuilder();
@@ -186,13 +170,7 @@ public class Menu {
 
     public static void listarOrdCliente() {
         StringBuilder clientes = new StringBuilder();
-        Comparator<ClientePF> comparator = new Comparator<ClientePF>() {
-            @Override
-            public int compare(ClientePF o1, ClientePF o2) {
-                return o1.getNome().compareTo(o2.getNome());
-            }
-        };
-        Collections.sort(listaClientes,comparator);
+        Collections.sort(listaClientes);
         for (ClientePF clientePF : listaClientes){
             clientes.append(clientePF.getNome().toString()).append("\n");
         }
