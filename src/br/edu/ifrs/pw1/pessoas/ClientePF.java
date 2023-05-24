@@ -47,7 +47,7 @@ public final class ClientePF extends Cliente implements Comparable<ClientePF>{
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        super.toString();
+        sb.append(super.toString());
         sb.append("CPF: ").append(cpf).append("\n");
         sb.append("Telefone: ").append(telefone).append("\n");
         sb.append("Pedidos: \n");

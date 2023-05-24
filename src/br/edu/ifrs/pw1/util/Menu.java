@@ -153,7 +153,6 @@ public class Menu {
                     break;
                 }
             }
-
             }
             if (!flag) {
                 JOptionPane.showMessageDialog(null, "Número de pedido inválido");

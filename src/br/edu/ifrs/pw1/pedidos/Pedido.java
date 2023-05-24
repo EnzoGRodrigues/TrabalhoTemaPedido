@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class Pedido implements Validador, Comparable<Pedido>{
 
-    private static int contador = 0; //variavel numero
+    private static int contador = 1; //variavel numero
     private int numero;
     private double valor;
     private String data;
