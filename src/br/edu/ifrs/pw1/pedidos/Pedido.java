@@ -5,6 +5,7 @@ import br.edu.ifrs.pw1.util.Validador;
 
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 public class Pedido implements Validador, Comparable<Pedido>{
@@ -20,11 +21,11 @@ public class Pedido implements Validador, Comparable<Pedido>{
     public Pedido(){
     }
 
-    public Pedido(double valor, String data, Situacao situacao, LinkedList<ItemPedido> itensPedidos) {
+    public Pedido(double valor, String data, Situacao situacao, List<ItemPedido> itensPedidos) {
         this.valor = valor;
         this.data = data;
         this.situacao = situacao.ABERTO;
-        this.itensPedidos = itensPedidos;
+        this.itensPedidos = (LinkedList<ItemPedido>) itensPedidos;
         this.numero = contador;
         contador++;
     }
@@ -65,12 +66,12 @@ public class Pedido implements Validador, Comparable<Pedido>{
         this.situacao = situacao;
     }
 
-    public LinkedList<ItemPedido> getItensPedidos() {
+    public List<ItemPedido> getItensPedidos() {
         return itensPedidos;
     }
 
-    public void setItensPedidos(LinkedList<ItemPedido> itensPedidos) {
-        this.itensPedidos = itensPedidos;
+    public void setItensPedidos(List<ItemPedido> itensPedidos) {
+        this.itensPedidos = (LinkedList<ItemPedido>) itensPedidos;
     }
 
     @Override

@@ -162,7 +162,7 @@ public class Menu {
     public static void listarTodosClientes() {
         StringBuilder clientes = new StringBuilder();
         for (ClientePF clientePF : listaClientes){
-            clientes.append(clientePF.getNome().toString()).append("\n");
+            clientes.append(clientePF.getNome()).append("\n");
         }
         JOptionPane.showMessageDialog(null,clientes);
     }
@@ -171,7 +171,7 @@ public class Menu {
         StringBuilder clientes = new StringBuilder();
         Collections.sort(listaClientes);
         for (ClientePF clientePF : listaClientes){
-            clientes.append(clientePF.getNome().toString()).append("\n");
+            clientes.append(clientePF.getNome()).append("\n");
         }
         JOptionPane.showMessageDialog(null,clientes);
     }

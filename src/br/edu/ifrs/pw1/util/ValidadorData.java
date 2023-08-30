@@ -12,11 +12,7 @@ public class ValidadorData implements Validador<ValidadorData>{
         try{
             Date date = format.parse(data);
 
-            if(date.getYear() + 1900 >= 2019){
-                return true;
-            }else {
-                return false;
-            }
+            return date.getYear() + 1900 >= 2019;
         }catch (ParseException e){
             return false;
         }

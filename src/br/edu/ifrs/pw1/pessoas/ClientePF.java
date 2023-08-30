@@ -3,6 +3,7 @@ package br.edu.ifrs.pw1.pessoas;
 import br.edu.ifrs.pw1.pedidos.Pedido;
 
 import java.util.Objects;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 public final class ClientePF extends Cliente implements Comparable<ClientePF>{
@@ -13,11 +14,11 @@ public final class ClientePF extends Cliente implements Comparable<ClientePF>{
 
     public ClientePF(){}
 
-    public ClientePF(String nome, String endereco, String cpf, String telefone, TreeSet<Pedido> pedidos) {
+    public ClientePF(String nome, String endereco, String cpf, String telefone, SortedSet<Pedido> pedidos) {
         super(nome, endereco);
         this.cpf = cpf;
         this.telefone = telefone;
-        this.pedidos = pedidos;
+        this.pedidos = (TreeSet<Pedido>) pedidos;
     }
 
     public String getCpf() {
@@ -36,12 +37,12 @@ public final class ClientePF extends Cliente implements Comparable<ClientePF>{
         this.telefone = telefone;
     }
 
-    public TreeSet<Pedido> getPedidos() {
+    public SortedSet<Pedido> getPedidos() {
         return pedidos;
     }
 
-    public void setPedidos(TreeSet<Pedido> pedidos) {
-        this.pedidos = pedidos;
+    public void setPedidos(SortedSet<Pedido> pedidos) {
+        this.pedidos = (TreeSet<Pedido>) pedidos;
     }
 
     @Override
